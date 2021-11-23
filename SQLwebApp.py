@@ -58,7 +58,9 @@ def ShowTable(tableName):
 def EditTable(tableName):
     headings = np.array(si.get_data("select column_name from information_schema.columns where table_name='{}'".format(tableName))).flatten()
     if request.method == 'POST':
-        if request.form.get('enter'):
+        if request.form.get('showTable'):
+            return redirect(url_for('selectTabletoShow'))
+        elif request.form.get('enter'):
             tableName = request.form.get('tblnam')
             print(tableName)
             return redirect(url_for('EditTable', tableName=tableName))
