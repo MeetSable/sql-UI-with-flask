@@ -1,16 +1,8 @@
-{% extends 'index.html' %}
+{% extends 'selectTable.html' %}
 
 {% block title %} Tables {% endblock %}
 
-
-{% block content %}
-<label >Hello</label>
-<form id= 'mode' action="" method="post">
-    <button id='tabl' name='nav' type="button" value='showTable' disabled>Show Tables</button>
-    <button id='edit' name='nav' type="button" value='editTable'>Edit Tables</button>
-    <input type="text" name="tblnam" id='text'>
-    <button type="submit" >Enter</button>
-</form>
+{% block table %}
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 <table id='dtTable' class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
     <thead>

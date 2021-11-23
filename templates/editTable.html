@@ -1,0 +1,15 @@
+{% extends 'index.html' %}
+
+{% block title %} Tables {% endblock %}
+
+
+{% block content %}
+<form id= 'mode' action="" method="post">
+    <button id='tabl' name='nav' type="button" value='showTable'>Show Tables</button>
+    <button id='edit' name='nav' type="button" value='editTable' disabled>Edit Tables</button>
+    <input type="text" name="main.tblnam" id='text'>
+    <button type="submit" >Enter</button>
+</form>
+{% block edit %}
+{% endblock %}
+{% endblock %}
