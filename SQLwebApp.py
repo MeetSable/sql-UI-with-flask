@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 
 from flask.json import dump
+from numpy.lib import type_check
 
 import sql_interface as si
 import numpy as np
@@ -12,23 +13,27 @@ app = Flask(__name__, template_folder='templates')
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        if request.form.get('nav') == 'showTable':
+        if request.form.get('showTable'):
             return redirect(url_for('selectTabletoShow'))
-        elif request.form.get('nav') == 'editTable':
-            return redirect(url_for('selectTabletoShow'))
+        elif request.form.get('editTable'):
+            return redirect(url_for('selectTabletoEdit'))
     return render_template("index.html")
 
 @app.route('/table', methods=['GET','POST'])
 def selectTabletoShow():
     if request.method == 'POST':
+        if request.form.get('editTable'):
+            return redirect(url_for('selectTabletoEdit'))
         tableName = request.form.get('tblnam')
         print(tableName)
         return redirect(url_for('ShowTable', tableName=tableName))
     return render_template('selectTable.html')
         
-@app.route('/EditTable', methods=['GET','POST'])
+@app.route('/edit', methods=['GET','POST'])
 def selectTabletoEdit():
     if request.method == 'POST':
+        if request.form.get('showTable'):
+            return redirect(url_for('selectTabletoShow'))
         tableName = request.form.get('tblnam')
         print(tableName)
         return redirect(url_for('EditTable', tableName=tableName))
@@ -38,6 +43,8 @@ def selectTabletoEdit():
 @app.route('/table/<tableName>', methods=['GET', 'POST'])
 def ShowTable(tableName):    
     if request.method == 'POST':
+        if request.form.get('editTable'):
+            return redirect(url_for('selectTabletoEdit'))
         tableName = request.form.get('tblnam')
         print(tableName)
         return redirect(url_for('ShowTable', tableName=tableName))
@@ -50,7 +57,28 @@ def ShowTable(tableName):
 @app.route('/edit/<tableName>', methods=['GET', 'POST'])
 def EditTable(tableName):
     headings = np.array(si.get_data("select column_name from information_schema.columns where table_name='{}'".format(tableName))).flatten()
-    return render_template('editTable.html', headings=headings)
+    if request.method == 'POST':
+        if request.form.get('enter'):
+            tableName = request.form.get('tblnam')
+            print(tableName)
+            return redirect(url_for('EditTable', tableName=tableName))
+        elif request.form.get('hello'):
+            if len(headings) > 1:
+                query = 'insert into {}('.format(tableName)
+                for h in range(len(headings)-1):
+                    query = query + '{}, '.format(headings[h])
+                query = query + '{}) values('.format(headings[-1])
+                temp = []
+                for i in headings:
+                    temp.append(request.form.get(i))
+                for h in range(len(temp)-1):
+                    query = query + '{}, '.format(temp[h])
+                query = query + '{})'.format(temp[-1])
+            else:
+                query = 'insert into {}({}) values("{}")'.format(tableName, headings[0], request.form.get(headings[0]))
+            print(query)
+            si.insert_data(query)
+    return render_template('edit.html', headings=headings)
 
     
 

@@ -55,7 +55,23 @@ def get_data(query):
         if conn is not None:
             conn.close()
 
-
+def insert_data(query):
+    conn = None
+    try:
+        params = config()
+        conn = psycopg2.connect(**params)
+        cur = conn.cursor()
+        cur.execute('set search_path to db')
+        cur.execute(query)
+        print("The number of parts: ", cur.rowcount)
+        cur.commit()
+        cur.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close()
 
 if __name__ == '__main__':
-    data = get_data('employee 5')
+    # data = get_data('employee 5')
+    insert_data('insert into departments(department) values(\'hello\');')

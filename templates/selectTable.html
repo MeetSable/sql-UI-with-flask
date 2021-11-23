@@ -5,10 +5,10 @@
 
 {% block content %}
 <form id= 'mode' action="" method="post">
-    <button id='tabl' name='nav' type="button" value='showTable' disabled>Show Tables</button>
-    <button id='edit' name='nav' type="button" value='editTable'>Edit Tables</button>
+    <button id="tabl" name="showTable" type="submit" value="showTable" disabled>Show Tables</button>
+    <button id="edit" name="editTable" type="submit" value="editTable">Edit Tables</button>
     <input type="text" name="tblnam" id='text'>
-    <button type="submit" >Enter</button>
+    <button type="submit" name='enter' >Enter</button>
 </form>
 {% block table %}
 {% endblock %}

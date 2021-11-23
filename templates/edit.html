@@ -1,4 +1,10 @@
-{% extends editTable.html %}
+{% extends 'editTable.html' %}
 {% block edit %}
-edit mode
+<form action="" method="post">
+    {% for heading in headings %}
+        <label for={{heading}}>{{ heading }}</label>
+        <input type="text" name={{heading}}>
+    {% endfor %}
+    <input type="submit" name='hello' value="hello">
+</form>
 {% endblock %}
