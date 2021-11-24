@@ -1,10 +1,15 @@
 {% extends 'editTable.html' %}
+{% block title %} Edit {{tableName}} {% endblock %}
 {% block edit %}
+<div>
 <form action="" method="post">
     {% for heading in headings %}
-        <label for={{heading}}>{{ heading }}</label>
-        <input type="text" name={{heading}}>
+    <div>
+        <label  for={{heading}}>{{ heading }}</label>
+        <input type="text" class="input-xs" name={{heading}}> <br>
+    </div>
     {% endfor %}
-    <input type="submit" name='hello' value="hello">
+    <input type="submit" class="btn btn-secondary" name='Submit' value="Submit">
 </form>
+</div>
 {% endblock %}

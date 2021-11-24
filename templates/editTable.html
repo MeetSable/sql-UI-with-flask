@@ -1,15 +1,22 @@
 {% extends 'index.html' %}
 
-{% block title %} Tables {% endblock %}
+{% block title %} Edit {% endblock %}
 
 
 {% block content %}
+<div aligh='center'>
 <form id= 'mode' action="" method="post">
-    <button id="tabl" name="showTable" type="submit" value="showTable">Show Tables</button>
-    <button id="edit" name="editTable" type="submit" value="editTable" disabled>Edit Tables</button>
-    <input type="text" name="tblnam" id='text'>
-    <button type="submit" name='enter' value='enter' >Enter</button>
+    <button id="tabl" class="btn btn-primary btn-lg" name="showTable" type="submit" value="showTable">Show Tables</button>
+    <button id="edit" class="btn btn-primary btn-lg" name="editTable" type="submit" value="editTable" disabled>Edit Tables</button> <br>
+</form></div>
+<div>
+<form action="" method="post">
+    <input type="text" class="input" name="tblnam" id='text'>
+    <button type="submit" class="btn btn-secondary" name='enter' value='enter' >Enter</button>
+    <p class='fs-4'>Table List:</p>
+    <p class='fs-2'> all_manufacturing_machines, contacts, contacts_details, delivery, departments, driver_details, employee, employee_type, manufacturing_machines, material_providers, raw_material_orders, raw_materials, sales, shop_details, shop_orders, toy_base, toy_materials, toy_types</p>
 </form>
+</div>
 {% block edit %}
 {% endblock %}
 {% endblock %}

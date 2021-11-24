@@ -50,7 +50,7 @@ def ShowTable(tableName):
         return redirect(url_for('ShowTable', tableName=tableName))
     headings = np.array(si.get_data("select column_name from information_schema.columns where table_name='{}'".format(tableName))).flatten()
     rows = np.array(si.get_data("select * from {}".format(tableName)))
-    return render_template('table.html', headings=headings, rows = rows)
+    return render_template('table.html', headings=headings, rows = rows, tableName=tableName)
 
 
 # Insert in table
@@ -64,23 +64,16 @@ def EditTable(tableName):
             tableName = request.form.get('tblnam')
             print(tableName)
             return redirect(url_for('EditTable', tableName=tableName))
-        elif request.form.get('hello'):
-            if len(headings) > 1:
-                query = 'insert into {}('.format(tableName)
-                for h in range(len(headings)-1):
-                    query = query + '{}, '.format(headings[h])
-                query = query + '{}) values('.format(headings[-1])
-                temp = []
-                for i in headings:
-                    temp.append(request.form.get(i))
-                for h in range(len(temp)-1):
-                    query = query + '{}, '.format(temp[h])
-                query = query + '{})'.format(temp[-1])
-            else:
-                query = 'insert into {}({}) values("{}")'.format(tableName, headings[0], request.form.get(headings[0]))
+        elif request.form.get('Submit'):
+            query = 'insert into {}('.format(tableName) + ', '.join(['%s' for _ in range(len(headings))]) + ') values(' + ', '.join(['\'%s\'' for _ in range(len(headings))]) + ')'
+            temp = headings
+            for i in headings:
+                temp = np.append(temp, request.form.get(i))
+            temp = tuple(temp)
+            query = query% temp
             print(query)
-            si.insert_data(query)
-    return render_template('edit.html', headings=headings)
+            # si.insert_data(query)
+    return render_template('edit.html', headings=headings, tableName=tableName)
 
     
 

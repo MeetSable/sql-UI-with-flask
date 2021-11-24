@@ -64,9 +64,11 @@ def insert_data(query):
         cur.execute('set search_path to db')
         cur.execute(query)
         print("The number of parts: ", cur.rowcount)
-        cur.commit()
+        print(cur.statusmessage)
+        conn.commit()
         cur.close()
     except (Exception, psycopg2.DatabaseError) as error:
+        conn.rollback()
         print(error)
     finally:
         if conn is not None:
