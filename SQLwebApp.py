@@ -9,6 +9,9 @@ import numpy as np
 
 app = Flask(__name__, template_folder='templates')
 
+tables = [  "all_manufacturing_machines", "contacts", "contacts_details", "delivery", "departments", "driver_details", "employee", "employee_type", "manufacturing_machines", "material_providers",
+            "raw_material_orders", "raw_materials", "sales", "shop_details", "shop_orders", "toy_base", "toy_materials", "toy_types"]
+
 #home page
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -41,7 +44,9 @@ def selectTabletoEdit():
 
 # display tables   
 @app.route('/table/<tableName>', methods=['GET', 'POST'])
-def ShowTable(tableName):    
+def ShowTable(tableName):
+    if tableName not in tables:
+        return redirect(url_for('selectTabletoShow'))    
     if request.method == 'POST':
         if request.form.get('editTable'):
             return redirect(url_for('selectTabletoEdit'))
@@ -57,6 +62,8 @@ def ShowTable(tableName):
 @app.route('/edit/<tableName>', methods=['GET', 'POST'])
 def EditTable(tableName):
     headings = np.array(si.get_data("select column_name from information_schema.columns where table_name='{}'".format(tableName))).flatten()
+    if tableName not in tables:
+        return redirect(url_for('selectTabletoEdit'))
     if request.method == 'POST':
         if request.form.get('showTable'):
             return redirect(url_for('selectTabletoShow'))
