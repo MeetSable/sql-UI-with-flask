@@ -30,7 +30,7 @@ def selectTabletoShow():
         tableName = request.form.get('tblnam')
         print(tableName)
         return redirect(url_for('ShowTable', tableName=tableName))
-    return render_template('selectTable.html')
+    return render_template('selectTable.html', tables=tables)
         
 @app.route('/edit', methods=['GET','POST'])
 def selectTabletoEdit():
@@ -40,7 +40,7 @@ def selectTabletoEdit():
         tableName = request.form.get('tblnam')
         print(tableName)
         return redirect(url_for('EditTable', tableName=tableName))
-    return render_template('editTable.html')
+    return render_template('editTable.html', tables=tables)
 
 # display tables   
 @app.route('/table/<tableName>', methods=['GET', 'POST'])
@@ -55,7 +55,7 @@ def ShowTable(tableName):
         return redirect(url_for('ShowTable', tableName=tableName))
     headings = np.array(si.get_data("select column_name from information_schema.columns where table_name='{}'".format(tableName))).flatten()
     rows = np.array(si.get_data("select * from {}".format(tableName)))
-    return render_template('table.html', headings=headings, rows = rows, tableName=tableName)
+    return render_template('table.html', headings=headings, rows = rows, tableName=tableName, tables=tables)
 
 
 # Insert in table
@@ -80,7 +80,7 @@ def EditTable(tableName):
             query = query% temp
             print(query)
             # si.insert_data(query)
-    return render_template('edit.html', headings=headings, tableName=tableName)
+    return render_template('edit.html', headings=headings, tableName=tableName, tables=tables)
 
     
 
