@@ -38,7 +38,7 @@ def get_data(query):
         params = config()
         conn = psycopg2.connect(**params)
         cur = conn.cursor()
-        cur.execute('set search_path to db')
+        cur.execute('set search_path to public')
         cur.execute(query)
         print("The number of parts: ", cur.rowcount)
         row = cur.fetchone()
@@ -75,5 +75,7 @@ def insert_data(query):
             conn.close()
 
 if __name__ == '__main__':
-    # data = get_data('employee 5')
-    insert_data('insert into departments(department) values(\'hello\');')
+    connect()
+
+    data = get_data('select * from employee')
+    # insert_data('insert into departments(department) values(\'hello\');')
