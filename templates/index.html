@@ -5,24 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
     <title>{% block title %}Home Page{% endblock %}</title>
 
-
+    
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" />
-  
-
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" />
     <script type="text/javascript"  src="https://code.jquery.com/jquery-3.5.1.js">    </script>
-  
+    
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js">     </script>
+    
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles.css') }}" >
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    
 </head>
-<body style="margin:4; padding:4">
+<body class='body'>
     <div>{% block content %}
-        <form action method="post">
-            <button id="tabl" class="btn btn-primary btn-lg" name="showTable" type="submit" value="showTable">Show Table</button>
-            <button id="edit" class="btn btn-primary btn-lg" name="editTable" type="submit" value="editTable">Edit Table</button> <br> 
+        <form action method="post", class='tab'>
+            <button id="tabl" class="tab-button" name="showTable" type="submit" value="showTable">Show Table</button>
+            <button id="edit" class="tab-button" name="editTable" type="submit" value="editTable">Edit Table</button> <br> 
         </form>
 
         {% endblock %}
     </div>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 

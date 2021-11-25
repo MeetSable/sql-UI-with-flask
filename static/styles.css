@@ -1,0 +1,87 @@
+.body {
+    padding:4px;
+    background-color:#4CC9F0;
+}
+.tab{
+    background-color: #3A0CA3;
+    margin-top:-4px;
+    margin-left:-4px;
+    margin-right:-4px;
+
+}
+.tab-button{
+    color: white;
+    background-color: transparent;
+    outline:0;
+    font-size: 20px;
+    tab-size: 25px;
+    border:10px;
+    margin: -2px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.tab-button:active, .tab-button:hover, .tab-button:focus{
+    outline:0;
+}
+.tab-button:hover{
+    transition: 0.5s;
+    background-color: #31beffbd;
+    text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
+}
+
+.tab-button:disabled{
+    background-color: #4CC9F0;
+    color: white;
+    text-shadow: 0 0 3px #000000, 0 0 5px #000000;
+    
+}
+
+select{
+    border-width: 0px;
+    color: white;
+    font-size: 30px;
+    border-right-width: 10px;
+    border-color:#157aff;  
+    border-radius: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #157aff;
+}
+option{
+    margin: 0px;
+}
+
+
+.table-head{
+    background-color: #3A0CA3;
+    color:whitesmoke;
+    text-align: center;
+}
+.input-xs{
+    background-color: rgba(240, 248, 255, 0.548);
+    border-radius: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-width: 0px;
+}
+
+.button-s{
+    background-color: #2529f7;
+    color:white;
+    font-size: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-width: 0px;
+    border-radius: 10px;
+}
+
+.button-s:hover{
+    transition: 0.3s;
+    background-color: #2529f7b6;
+}

@@ -5,22 +5,21 @@
 
 {% block content %}
 <div>
-<form id= 'mode' action="" method="post">
-    <button id="tabl" class="btn btn-primary btn-lg" name="showTable" type="submit" value="showTable" disabled>Show Table</button>
-    <button id="edit" class="btn btn-primary  btn-lg" name="editTable" type="submit" value="editTable">Edit Table</button> <br>
+    <form  method="post", class='tab'>
+    <button id="tabl" class="tab-button" name="showTable" type="submit" value="showTable" disabled>Show Table</button>
+    <button id="edit" class="tab-button" name="editTable" type="submit" value="editTable">Edit Table</button> <br>
 </form>
 </div>
 <div>
     <form action="" method="post">
-    <h3>Select Table:</h3>
-    <select name="tblnam" class="custom-select w-25" id="">
-        <option selected>Choose..</option>
+    <h3>Select Table</h3>
+    <select name="tblnam" id="select-list" onchange="this.form.submit();">
+        <option selected value='nothing'>Choose..</option>
         {% for table in tables %}
             <option value={{ table }}>{{ table }}</option>
         {% endfor %}
 
     </select>
-    <button type="submit" class="btn btn-secondary " name='enter' >Select</button>
     </form>
 </div>
 {% block table %}
