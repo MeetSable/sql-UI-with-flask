@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for
 
 from flask.json import dump
 from numpy.lib import type_check
-
+import webbrowser
 import sql_interface as si
 import numpy as np
 
@@ -27,6 +27,10 @@ def index():
 #Custom query
 @app.route('/custom', methods=['GET', 'POST'])
 def customQuery():
+    query = request.args.get('query')
+    if query == None:
+        query = ''   
+
     if request.method == 'POST':
         if request.form.get('showTable'):
             return redirect(url_for('selectTabletoShow'))
@@ -38,7 +42,7 @@ def customQuery():
             print(query)
             return redirect(url_for('customTable', query=query))
 
-    return render_template('customQuery.html')
+    return render_template('customQuery.html', query=query)
 
 #custom Table show
 @app.route('/custom/query', methods=['GET', 'POST'])
@@ -54,7 +58,10 @@ def customTable():
             query = request.form.get('query')
             return redirect(url_for('customTable', query=query))
     data = si.get_data(query)
-    return render_template('customTable.html', data=data)
+    if data == None:
+        webbrowser.open_new("https://youtu.be/dQw4w9WgXcQ")
+        return redirect(url_for('customQuery', query=query))
+    return render_template('customTable.html', data=data, query=query)
 
 #Table selceiotn page to show
 @app.route('/table', methods=['GET','POST'])
