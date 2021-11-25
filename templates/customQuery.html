@@ -1,0 +1,20 @@
+{% extends 'index.html' %}
+
+{% block title %} Custom Query {% endblock %}
+{% block content %}
+<div>
+    <form  method="POST" class='tab'>
+    <button id="tabl" class="tab-button" name="showTable" type="submit" value="showTable">Show Table</button>
+    <button id="edit" class="tab-button" name="editTable" type="submit" value="editTable">Edit Table</button>
+    <button id="edit" class="tab-button" name="customQuery" type="submit" value="customQuery" disabled>Custom Query</button><br>
+</form></div>
+<h3>Only 'SELECT' queries</h3> <br>
+<div>
+    <form  method="POST">
+    <textarea name="query" placeholder="Enter your query here"></textarea><br><br>
+    <input type="submit" class="button-s" name='Submit' value="Submit">
+</form>
+</div>
+{% block table %}
+{% endblock %}
+{% endblock %}

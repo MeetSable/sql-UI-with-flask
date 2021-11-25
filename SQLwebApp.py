@@ -20,24 +20,66 @@ def index():
             return redirect(url_for('selectTabletoShow'))
         elif request.form.get('editTable'):
             return redirect(url_for('selectTabletoEdit'))
-    return render_template("index.html")
+        elif request.form.get('customQuery'):
+            return redirect(url_for('customQuery'))
+    return redirect(url_for('selectTabletoShow'))
 
+#Custom query
+@app.route('/custom', methods=['GET', 'POST'])
+def customQuery():
+    if request.method == 'POST':
+        if request.form.get('showTable'):
+            return redirect(url_for('selectTabletoShow'))
+        elif request.form.get('editTable'):
+            return redirect(url_for('selectTabletoEdit'))
+
+        elif request.form.get('Submit'):
+            query = request.form.get('query')
+            print(query)
+            return redirect(url_for('customTable', query=query))
+
+    return render_template('customQuery.html')
+
+#custom Table show
+@app.route('/custom/query', methods=['GET', 'POST'])
+def customTable():
+    query = request.args.get('query')
+    if request.method == 'POST':
+        if request.form.get('showTable'):
+            return redirect(url_for('selectTabletoShow'))
+        elif request.form.get('editTable'):
+            return redirect(url_for('selectTabletoEdit'))
+
+        elif request.form.get('Submit'):
+            query = request.form.get('query')
+            return redirect(url_for('customTable', query=query))
+    data = si.get_data(query)
+    return render_template('customTable.html', data=data)
+
+#Table selceiotn page to show
 @app.route('/table', methods=['GET','POST'])
 def selectTabletoShow():
     if request.method == 'POST':
         if request.form.get('editTable'):
             return redirect(url_for('selectTabletoEdit'))
+        elif request.form.get('customQuery'):
+            return redirect(url_for('customQuery'))
+
         if request.form.get('tblnam')!= 'nothing':
             tableName = request.form.get('tblnam')
             print(tableName)
             return redirect(url_for('ShowTable', tableName=tableName))
     return render_template('selectTable.html', tables=tables)
-        
+
+#Table Select for editing    
 @app.route('/edit', methods=['GET','POST'])
 def selectTabletoEdit():
     if request.method == 'POST':
         if request.form.get('showTable'):
             return redirect(url_for('selectTabletoShow'))
+        elif request.form.get('customQuery'):
+            return redirect(url_for('customQuery'))
+
         if request.form.get('tblnam')!= 'nothing':
             tableName = request.form.get('tblnam')
             print(tableName)
@@ -52,6 +94,9 @@ def ShowTable(tableName):
     if request.method == 'POST':
         if request.form.get('editTable'):
             return redirect(url_for('selectTabletoEdit'))
+        elif request.form.get('customQuery'):
+            return redirect(url_for('customQuery'))
+
         tableName = request.form.get('tblnam')
         print(tableName)
         return redirect(url_for('ShowTable', tableName=tableName))
@@ -69,6 +114,9 @@ def EditTable(tableName):
     if request.method == 'POST':
         if request.form.get('showTable'):
             return redirect(url_for('selectTabletoShow'))
+        elif request.form.get('customQuery'):
+            return redirect(url_for('customQuery'))
+
         elif request.form.get('Submit'):
             query = 'insert into {}('.format(tableName) + ', '.join(['%s' for _ in range(len(headings))]) + ') values(' + ', '.join(['\'%s\'' for _ in range(len(headings))]) + ')'
             temp = headings
@@ -85,6 +133,5 @@ def EditTable(tableName):
     return render_template('edit.html', headings=headings, tableName=tableName, tables=tables)
 
     
-
 if __name__ == '__main__':    
     app.run(debug=True)
