@@ -37,6 +37,11 @@
     color: #1d3557;
     
 }
+table{
+    margin:15px;
+    align-items: center;
+    width:75%;
+}
 label {
     display: inline-block;
     width: 200px;
