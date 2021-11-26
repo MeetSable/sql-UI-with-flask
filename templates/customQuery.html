@@ -3,23 +3,31 @@
 {% block title %} Custom Query {% endblock %}
 {% block content %}
 <div>
-    <form  method="POST" class='tab'>
-    <button id="tabl" class="tab-button" name="showTable" type="submit" value="showTable">Show Table</button>
-    <button id="edit" class="tab-button" name="editTable" type="submit" value="editTable">Edit Table</button>
-    <button id="edit" class="tab-button" name="customQuery" type="submit" value="customQuery" disabled>Custom Query</button><br>
-</form></div>
+    <form method="POST" class='tab'>
+        <button id="tabl" class="tab-button" name="showTable" type="submit" value="showTable">Show Table</button>
+        <button id="edit" class="tab-button" name="editTable" type="submit" value="editTable">Edit Table</button>
+        <button id="edit" class="tab-button" name="customQuery" type="submit" value="customQuery" disabled>Custom
+            Query</button>
+        <button id="edit" class="tab-button" name="deleteTable" type="submit" value="deleteTable">Delete Table</button>
+        <br>
+    </form>
+</div>
 <h3>Only 'SELECT' queries</h3> <br>
 <div>
-    <form  method="POST">
-    <textarea name="query" placeholder="Enter your query here">{{ query }}</textarea><br><br>
-    <input type="submit" class="button-s" name='Submit' value="Submit">
-</form>
-{% block error %}
-{% if query != "" %}
+    <form method="POST">
+        <textarea name="query" placeholder="Enter your query here">{{ query }}</textarea><br><br>
+        <input type="submit" class="button-s" name='Submit' value="Submit">
+    </form>
+    {% block error %}
+    {% if query != "" %}
     <h4>"{{ query }}" is not a valid query for this database.</h4>
-    <div class="tenor-gif-embed" data-postid="23727670" data-share-method="host" data-aspect-ratio="0.84375" data-width="50%"><a href="https://tenor.com/view/rickroll-rick-roll-gif-gif-23727670">Rickroll Gif GIF</a>from <a href="https://tenor.com/search/rickroll-gifs">Rickroll GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
-{% endif %}
-{% endblock %}
+    <div class="tenor-gif-embed" data-postid="23727670" data-share-method="host" data-aspect-ratio="0.84375"
+        data-width="50%"><a href="https://tenor.com/view/rickroll-rick-roll-gif-gif-23727670">Rickroll Gif GIF</a>from
+        <a href="https://tenor.com/search/rickroll-gifs">Rickroll GIFs</a>
+    </div>
+    <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+    {% endif %}
+    {% endblock %}
 </div>
 {% block table %}
 {% endblock %}

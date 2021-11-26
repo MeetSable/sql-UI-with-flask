@@ -1,6 +1,8 @@
 import psycopg2
 from config import config
 
+schema_name = 'public'
+
 def connect():
     """ Connect to the PostgreSQL database server """
     conn = None
@@ -38,7 +40,7 @@ def get_data(query):
         params = config()
         conn = psycopg2.connect(**params)
         cur = conn.cursor()
-        cur.execute('set search_path to public')
+        cur.execute('set search_path to ' + schema_name)
         cur.execute(query)
         print("The number of parts: ", cur.rowcount)
         row = cur.fetchone()
@@ -61,9 +63,29 @@ def insert_data(query):
         params = config()
         conn = psycopg2.connect(**params)
         cur = conn.cursor()
-        cur.execute('set search_path to db')
+        cur.execute('set search_path to ' + schema_name)
         cur.execute(query)
         print("The number of parts: ", cur.rowcount)
+        print(cur.statusmessage)
+        conn.commit()
+        cur.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        conn.rollback()
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close()
+
+
+def delete_data(query):
+    conn = None
+    try:
+        params = config()
+        conn = psycopg2.connect(**params)
+        cur = conn.cursor()
+        cur.execute('set search_path to ' + schema_name)
+        cur.execute(query)
+        # print("The number of parts: ", cur.rowcount)
         print(cur.statusmessage)
         conn.commit()
         cur.close()

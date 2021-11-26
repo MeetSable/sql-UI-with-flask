@@ -1,3 +1,4 @@
+from distutils.command import check
 from flask import Flask, render_template, request, redirect, url_for
 
 from flask.json import dump
@@ -6,6 +7,7 @@ import webbrowser
 import sql_interface as si
 import numpy as np
 
+current_table = "ok"
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
 
@@ -36,6 +38,8 @@ def customQuery():
             return redirect(url_for('selectTabletoShow'))
         elif request.form.get('editTable'):
             return redirect(url_for('selectTabletoEdit'))
+        elif request.form.get('deleteTable'):
+            return redirect(url_for('selectTabletoDelete'))
 
         elif request.form.get('Submit'):
             query = request.form.get('query')
@@ -71,6 +75,8 @@ def selectTabletoShow():
             return redirect(url_for('selectTabletoEdit'))
         elif request.form.get('customQuery'):
             return redirect(url_for('customQuery'))
+        elif request.form.get('deleteTable'):
+            return redirect(url_for('selectTabletoDelete'))
 
         if request.form.get('tblnam')!= 'nothing':
             tableName = request.form.get('tblnam')
@@ -86,12 +92,32 @@ def selectTabletoEdit():
             return redirect(url_for('selectTabletoShow'))
         elif request.form.get('customQuery'):
             return redirect(url_for('customQuery'))
+        elif request.form.get('deleteTable'):
+            return redirect(url_for('selectTabletoDelete'))
 
         if request.form.get('tblnam')!= 'nothing':
             tableName = request.form.get('tblnam')
             print(tableName)
             return redirect(url_for('EditTable', tableName=tableName))
     return render_template('editTable.html', tables=tables)
+
+@app.route('/delete', methods=['GET','POST'])
+def selectTabletoDelete():
+    if request.method == 'POST':
+        if request.form.get('showTable'):
+            return redirect(url_for('selectTabletoShow'))
+        if request.form.get('editTable'):
+            return redirect(url_for('selectTabletoEdit'))
+        elif request.form.get('customQuery'):
+            return redirect(url_for('customQuery'))
+        elif request.form.get('deleteTable'):
+            return redirect(url_for('selectTabletoDelete'))
+        if request.form.get('tblnam')!= 'nothing':
+            tableName = request.form.get('tblnam')
+            print(tableName)
+            return redirect(url_for('DeleteTable', tableName=tableName))
+    return render_template('delete.html', tables=tables)
+
 
 # display tables   
 @app.route('/table/<tableName>', methods=['GET', 'POST'])
@@ -103,11 +129,14 @@ def ShowTable(tableName):
             return redirect(url_for('selectTabletoEdit'))
         elif request.form.get('customQuery'):
             return redirect(url_for('customQuery'))
+        elif request.form.get('deleteTable'):
+            return redirect(url_for('selectTabletoDelete'))
+        else:
+            tableName = request.form.get('tblnam')
+            print(tableName)
+            return redirect(url_for('ShowTable', tableName=tableName))
 
-        tableName = request.form.get('tblnam')
-        print(tableName)
-        return redirect(url_for('ShowTable', tableName=tableName))
-    headings = np.array(si.get_data("select column_name from information_schema.columns where table_name='{}'".format(tableName))).flatten()
+    headings = np.array(si.get_data("select column_name from information_schema.columns where table_name='{}' order by ordinal_position".format(tableName))).flatten()
     rows = np.array(si.get_data("select * from {}".format(tableName)))
     return render_template('table.html', headings=headings, rows = rows, tableName=tableName, tables=tables)
 
@@ -123,6 +152,8 @@ def EditTable(tableName):
             return redirect(url_for('selectTabletoShow'))
         elif request.form.get('customQuery'):
             return redirect(url_for('customQuery'))
+        elif request.form.get('deleteTable'):
+            return redirect(url_for('selectTabletoDelete'))
 
         elif request.form.get('Submit'):
             query = 'insert into {}('.format(tableName) + ', '.join(['%s' for _ in range(len(headings))]) + ') values(' + ', '.join(['\'%s\'' for _ in range(len(headings))]) + ')'
@@ -132,13 +163,44 @@ def EditTable(tableName):
             temp = tuple(temp)
             query = query% temp
             print(query)
-            # si.insert_data(query)
+            si.insert_data(query)
         elif request.form.get('tblnam') != 'nothing':
             tableName = request.form.get('tblnam')
             print(tableName)
             return redirect(url_for('EditTable', tableName=tableName))
     return render_template('edit.html', headings=headings, tableName=tableName, tables=tables)
 
-    
+# delete tables
+@app.route('/delete/<tableName>', methods=['GET', 'POST'])
+def DeleteTable(tableName):
+    if tableName not in tables:
+        return redirect(url_for('selectTabletoDelete'))    
+    if request.method == 'POST':
+        if request.form.get('showTable'):
+            return redirect(url_for('selectTabletoShow'))
+        if request.form.get('editTable'):
+            return redirect(url_for('selectTabletoEdit'))
+        elif request.form.get('customQuery'):
+            return redirect(url_for('customQuery'))
+        elif request.form.getlist('checkboxes'):
+            checked_list = request.form.getlist('checkboxes')
+            print(checked_list)
+            for number in checked_list:
+                
+                ## Write Query here
+                
+                print(int(number))
+
+            
+        else:
+            tableName = request.form.get('tblnam')
+            print(tableName)
+            return redirect(url_for('DeleteTable', tableName=tableName))
+
+    headings = np.array(si.get_data("select column_name from information_schema.columns where table_name='{}' order by ordinal_position".format(tableName))).flatten()
+    rows = np.array(si.get_data("select * from {}".format(tableName)))
+    return render_template('deletetable.html', headings=headings, rows = rows, tableName=tableName, tables=tables)
+
+
 if __name__ == '__main__':    
     app.run(debug=True)
