@@ -1,0 +1,59 @@
+{% extends 'delete.html' %}
+
+{% block title %} {{ tableName }} {% endblock %}
+
+{% block table %}
+<!-- <script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#search").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#dtTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
+
+<div>
+    <input type="text" id="search"  placeholder="Type to search" align="right" class='input-xs' autocomplete="off">
+    <form action method="post">
+        <table id='dtTable' class='table-dark table-striped' cellspacing="0" width="100%">
+            <thead class='table-head '>
+
+                <tr>
+                    <th>check</th>
+                    {% for header in headings %}
+                    <th>{{ header }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody style='background-color: #1d3557; text-align: center;'>
+
+
+                {% for row in rows %}
+                <tr>
+                    <td><input type="checkbox" name=checkboxes value= '{{row[0]}}' ></td>
+                    {% for item in row %}
+                    <td>{{ item }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+        <button id="check_submit_button" class="button-s" name="checkbox_button" type="submit" value="checkbox_value" style="margin: 15px;">Delete</button>
+    </form>
+</div>
+<script>
+    $(document).ready(function () {
+        // $('#dtTable').DataTable({
+        //     'pagingType': 'simple'
+        // });
+        $('.dataTables_length').addClass('bs-select');
+
+    });
+</script>
+{% endblock %}

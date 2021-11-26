@@ -1,0 +1,29 @@
+{% extends 'index.html' %}
+
+{% block title %} Tables {% endblock %}
+
+{% block content %}
+<div>
+    <form method="post" , class='tab'>
+        <button id="tabl" class="tab-button" name="showTable" type="submit" value="showTable">Show Table</button>
+        <button id="edit" class="tab-button" name="editTable" type="submit" value="editTable">Edit Table</button>
+        <button id="edit" class="tab-button" name="customQuery" type="submit" value="customQuery">Custom Query</button>
+        <button id="edit" class="tab-button" name="deleteTable" type="submit" value="deleteTable" disabled>Delete Table</button>
+        <br>
+    </form>
+</div>
+<div>
+    <form action="" method="post">
+        <h3>Delete Table</h3>
+        <select name="tblnam" id="select-list" onchange="this.form.submit();">
+            <option selected value='nothing'>Choose..</option>
+            {% for table in tables %}
+            <option value={{ table }}>{{ table }}</option>
+            {% endfor %}
+
+        </select>
+    </form>
+</div>
+{% block table %}
+{% endblock %}
+{% endblock %}

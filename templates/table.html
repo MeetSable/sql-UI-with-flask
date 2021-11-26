@@ -3,7 +3,21 @@
 {% block title %} {{ tableName }} {% endblock %}
 
 {% block table %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#search").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#dtTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
+
 <div>
+    <input type="text" id="search"  placeholder="Type to search" align="right" class='input-xs' autocomplete="off">
 
 <table id='dtTable' class='table-dark table-striped' cellspacing="0" >
     <thead class='table-head '>

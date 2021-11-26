@@ -2,7 +2,21 @@
 {% block error %}
 {% endblock %}
 {% block table %}
-<div >
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#search").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#dtTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
+
+<div>
+    <input type="text" id="search"  placeholder="Type to search" align="right" class='input-xs' autocomplete="off">
     <table id='dtTable' class='table-striped table-dark' cellspacing="0" width="100%">
         <tbody style='background-color: #1d3557; text-align: center;'>
             {% for row in data %}
