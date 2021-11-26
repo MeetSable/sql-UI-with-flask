@@ -2,10 +2,9 @@
 {% block error %}
 {% endblock %}
 {% block table %}
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 <div >
-    <table id='dtTable' class='table-striped' cellspacing="0" width="100%">
-        <tbody style='background-color: rgba(10, 255, 243, 0.521); text-align: center;'>
+    <table id='dtTable' class='table-striped table-dark' cellspacing="0" width="100%">
+        <tbody style='background-color: #1d3557; text-align: center;'>
             {% for row in data %}
             <tr>
                 {% for item in row %}
@@ -17,11 +16,5 @@
     </table>
 </div>
 <script>
-    $(document).ready(function() {
-        $('#dtTable').DataTable({
-            'pagingType':'simple'
-        });
-        $('.dataTables_length').addClass('bs-select');
-    });
 </script>
 {% endblock %}

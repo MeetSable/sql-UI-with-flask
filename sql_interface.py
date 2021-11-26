@@ -75,5 +75,4 @@ def insert_data(query):
             conn.close()
 
 if __name__ == '__main__':
-    # data = get_data('employee 5')
-    insert_data('insert into departments(department) values(\'hello\');')
+    pass

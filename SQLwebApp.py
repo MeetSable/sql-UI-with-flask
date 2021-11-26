@@ -59,7 +59,6 @@ def customTable():
             return redirect(url_for('customTable', query=query))
     data = si.get_data(query)
     if data == None:
-        webbrowser.open_new("https://youtu.be/dQw4w9WgXcQ")
         return redirect(url_for('customQuery', query=query))
     return render_template('customTable.html', data=data, query=query)
 
@@ -107,7 +106,7 @@ def ShowTable(tableName):
         tableName = request.form.get('tblnam')
         print(tableName)
         return redirect(url_for('ShowTable', tableName=tableName))
-    headings = np.array(si.get_data("select column_name from information_schema.columns where table_name='{}'".format(tableName))).flatten()
+    headings = np.array(si.get_data("select column_name from information_schema.columns where table_name='{}'  ORDER BY ORDINAL_POSITION ".format(tableName))).flatten()
     rows = np.array(si.get_data("select * from {}".format(tableName)))
     return render_template('table.html', headings=headings, rows = rows, tableName=tableName, tables=tables)
 
@@ -115,7 +114,7 @@ def ShowTable(tableName):
 # Insert in table
 @app.route('/edit/<tableName>', methods=['GET', 'POST'])
 def EditTable(tableName):
-    headings = np.array(si.get_data("select column_name from information_schema.columns where table_name='{}'".format(tableName))).flatten()
+    headings = np.array(si.get_data("select column_name from information_schema.columns where table_name='{}'  ORDER BY ORDINAL_POSITION ".format(tableName))).flatten()
     if tableName not in tables:
         return redirect(url_for('selectTabletoEdit'))
     if request.method == 'POST':
@@ -141,4 +140,4 @@ def EditTable(tableName):
 
     
 if __name__ == '__main__':    
-    app.run(debug=True)
+    app.run(debug=True, port=5000)

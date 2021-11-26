@@ -3,9 +3,9 @@
 {% block title %} {{ tableName }} {% endblock %}
 
 {% block table %}
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
-<div >
-<table id='dtTable' class='table-striped' cellspacing="0" width="100%">
+<div>
+
+<table id='dtTable' class='table-dark table-striped' cellspacing="0" width="100%">
     <thead class='table-head '>
         <tr>
             {% for header in headings %}
@@ -13,7 +13,7 @@
             {% endfor %}
         </tr>
     </thead>
-    <tbody style='background-color: rgba(10, 255, 243, 0.521); text-align: center;'>
+    <tbody style='background-color: #1d3557; text-align: center;'>
         {% for row in rows %}
         <tr>
             {% for item in row %}
@@ -22,14 +22,7 @@
         </tr>
         {% endfor %}
     </tbody>
-</table>
+</table> 
+
 </div>
-<script>
-    $(document).ready(function() {
-        $('#dtTable').DataTable({
-            'pagingType':'simple'
-        });
-        $('.dataTables_length').addClass('bs-select');
-    });
-</script>
 {% endblock %}

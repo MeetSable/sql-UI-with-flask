@@ -1,16 +1,16 @@
 .body {
     padding:4px;
-    background-color:#4CC9F0;
+    background-color:#457b9d;
 }
 .tab{
-    background-color: #3A0CA3;
+    background-color: #1d3557;
     margin-top:-4px;
     margin-left:-4px;
     margin-right:-4px;
 
 }
 .tab-button{
-    color: white;
+    color: #f1faee;
     background-color: transparent;
     outline:0;
     font-size: 20px;
@@ -27,42 +27,54 @@
 }
 .tab-button:hover{
     transition: 0.5s;
-    background-color: #31beffbd;
-    text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
+    background-color: #457b9d83;
+    color: #0e1929;
+
 }
 
 .tab-button:disabled{
-    background-color: #4CC9F0;
-    color: white;
-    text-shadow: 0 0 3px #000000, 0 0 5px #000000;
+    background-color: #457b9d;
+    color: #1d3557;
     
+}
+label {
+    display: inline-block;
+    width: 200px;
+    text-align: left;
 }
 
 select{
     border-width: 0px;
-    color: white;
+    color: #1d3557;
     font-size: 30px;
     border-right-width: 10px;
-    border-color:#157aff;  
-    border-radius: 10px;
+    border-color:#a8dadc;  
     padding-left: 10px;
     padding-right: 10px;
     padding-top: 10px;
     padding-bottom: 10px;
-    background-color: #157aff;
+    background-color: #a8dadc;
+}
+select::selection, select:active, select:focus, select:checked{
+    outline: 0px;
 }
 option{
     margin: 0px;
+    border-radius: 0px;
 }
 
+option:hover{
+    
+    background-color: #457b9d;
+}
 
 .table-head{
-    background-color: #3A0CA3;
-    color:whitesmoke;
+    background-color: #e63946;
+    color:#f1faee;
     text-align: center;
 }
-.input-xs{
-    background-color: rgba(240, 248, 255, 0.548);
+.input-xs, .input{
+    background-color: #f1faee;
     border-radius: 5px;
     margin-left: 5px;
     margin-right: 5px;
@@ -70,8 +82,8 @@ option{
 }
 
 .button-s{
-    background-color: #2529f7;
-    color:white;
+    background-color: #1d3557;
+    color:#f1faee;
     font-size: 20px;
     padding-left: 20px;
     padding-right: 20px;
@@ -83,5 +95,12 @@ option{
 
 .button-s:hover{
     transition: 0.3s;
-    background-color: #2529f7b6;
+    background-color: #a8dadc;
+    color: #1d3557;
 }
+
+h4, h3{
+    color: #1d3557;
+    font-weight:900;
+}
+

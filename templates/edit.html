@@ -5,8 +5,8 @@
 <form action="" method="post">
     {% for heading in headings %}
     <div>
-        <label  for={{heading}}>{{ heading }}</label>
-        <input type="text" class="input-xs" name={{heading}}> <br>
+        <label style="color: #1d3557" for={{heading}}><b>{{ heading }}</b></label>
+        <input type="text" class="input-xs" name={{heading}}>
     </div>
     {% endfor %}
     <br>
